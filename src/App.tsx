@@ -2,138 +2,176 @@ import portrait from "@/assets/vivienne.jpg";
 
 const accent = "#C97B5A";
 
+type ContactLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+  download?: boolean;
+};
+
+const contactLinks: ContactLink[] = [
+  { label: "Email", href: "mailto:viivienn@gmail.com" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vivienne-chow/",
+    external: true,
+  },
+  { label: "GitHub", href: "https://github.com/viivienn", external: true },
+  { label: "Résumé", href: "vivienne-chow-resume.pdf", download: true },
+];
+
+function ContactLinks({ ariaLabel }: { ariaLabel: string }) {
+  return (
+    <nav
+      aria-label={ariaLabel}
+      className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm"
+    >
+      {contactLinks.map((link, i) => (
+        <span key={link.label} className="flex items-center gap-4">
+          {i > 0 && (
+            <span aria-hidden="true" className="text-[#C7C7C4]">
+              ·
+            </span>
+          )}
+          <a
+            href={link.href}
+            {...(link.download ? { download: "" } : {})}
+            {...(link.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+            className="rounded-sm underline underline-offset-4 decoration-[#1C1C1C]/20 transition-colors hover:decoration-[color:var(--accent)] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+            style={{ ["--accent" as string]: accent }}
+          >
+            {link.label}
+          </a>
+        </span>
+      ))}
+    </nav>
+  );
+}
+
 export default function App() {
   return (
     <main className="min-h-screen bg-[#FAFAF9] font-sans text-[#1C1C1C] antialiased">
       <div className="mx-auto max-w-[720px] px-6 py-16 sm:py-24">
-        {/* Hero */}
-        <header className="flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-8">
+        <header className="flex flex-col-reverse gap-6 sm:flex-row sm:items-start sm:gap-8">
           <div className="flex-1">
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Vivienne Chow
             </h1>
-            <p className="mt-2 text-[#6B6B6B]">Software Engineer at Google</p>
-            <p className="mt-5 leading-relaxed">
-              I'm a software engineer at Google working on infrastructure and
-              safety systems for products used by billions of people —
-              including Gemini. I like solving hard reliability problems and
-              building things that quietly just work.
+            <p className="mt-2 text-[#6B6B6B]">
+              Software Engineer at Google · Distributed Systems &amp; AI
+              Infrastructure
             </p>
-            <p className="mt-3 text-sm text-[#6B6B6B]">San Francisco, CA</p>
-            <nav aria-label="Primary contact links" className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-              {[
-                { label: "Email", href: "mailto:viivienn@gmail.com" },
-                { label: "LinkedIn", href: "https://linkedin.com/" },
-                { label: "GitHub", href: "https://github.com/viivienn" },
-                { label: "Résumé", href: "vivienne-chow-resume.pdf", download: true },
-              ].map((l, i) => (
-                <span key={l.label} className="flex items-center gap-4">
-                  {i > 0 && <span aria-hidden="true" className="text-[#C7C7C4]">·</span>}
-                  <a
-                    href={l.href}
-                    {...(l.download ? { download: "" } : {})}
-                    className="rounded-sm underline underline-offset-4 decoration-[#1C1C1C]/20 transition-colors hover:decoration-[color:var(--accent)] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
-                    style={{ ["--accent" as string]: accent }}
-                  >
-                    {l.label}
-                  </a>
-                </span>
-              ))}
-            </nav>
+            <p className="mt-5 leading-relaxed">
+              I build globally distributed production systems that support
+              Gemini and other high-scale Google products. My work spans
+              multi-region architecture, control planes, observability,
+              incident automation, and safe production rollouts.
+            </p>
+            <p className="mt-3 text-sm text-[#6B6B6B]">
+              San Francisco Bay Area, CA
+            </p>
+            <ContactLinks ariaLabel="Primary contact links" />
           </div>
           <img
             src={portrait}
-            alt="Portrait of Vivienne Chow"
-            className="h-28 w-28 shrink-0 rounded-2xl object-cover sm:h-32 sm:w-32"
+            alt="Portrait of Vivienne Chow, software engineer at Google"
+            width={144}
+            height={144}
+            className="h-28 w-28 shrink-0 rounded-2xl object-cover sm:mt-1 sm:h-36 sm:w-36"
           />
         </header>
 
         <SectionLabel>About</SectionLabel>
-        <p className="mt-4 leading-relaxed">
-          I'm a backend and infrastructure engineer who ended up working at the
-          intersection of large-scale systems and AI. Over the past few years
-          I've worked on some of the highest-traffic infrastructure at Google
-          and Amazon — the kind of systems that have to stay reliable for
-          millions of people at once, quietly, in the background. Lately that's
-          meant helping build the safety and reliability infrastructure behind
-          Google's Gemini models. I care about building things that are
-          dependable, well-designed, and don't fall over under pressure —
-          whether that's a distributed system or a good process.
-        </p>
-
-        <SectionLabel>What I care about</SectionLabel>
         <div className="mt-4 space-y-3 leading-relaxed">
           <p>
-            <span className="font-medium">What I'm drawn to —</span> high-traffic
-            systems and the latest technology, but also the quieter parts of a
-            system nobody notices until they break — the reliability layer, the
-            safety net, the thing that has to work at 3am.
+            I'm a backend and infrastructure engineer with more than six years
+            of experience building and operating large-scale systems at Google
+            and Amazon.
           </p>
           <p>
-            <span className="font-medium">How I try to work —</span> clearly,
-            calmly, and with the people around the problem, not just the code.
+            At Google, I work on distributed control-plane and reliability
+            infrastructure supporting production AI and data systems, including
+            systems used by Gemini. I focus on making complex systems resilient,
+            observable, and safe to operate under strict availability, latency,
+            and correctness requirements.
+          </p>
+          <p>
+            Previously, I worked on performance and reliability for Amazon's
+            Product Detail Page, one of the company's highest-traffic customer
+            surfaces.
           </p>
         </div>
 
-        <SectionLabel>Highlights</SectionLabel>
-        <ul className="mt-4 space-y-3 leading-relaxed list-disc pl-5 marker:text-[#C97B5A]">
+        <SectionLabel>Focus</SectionLabel>
+        <div className="mt-4 space-y-3 leading-relaxed">
+          <p>
+            <span className="font-medium">Distributed systems —</span>{" "}
+            Multi-region architecture, resilient control planes, distributed
+            data systems, failure isolation, and production migrations.
+          </p>
+          <p>
+            <span className="font-medium">AI infrastructure —</span> Production
+            infrastructure supporting generative AI products, with an emphasis
+            on reliability, correctness, and safe deployment.
+          </p>
+          <p>
+            <span className="font-medium">Production engineering —</span>{" "}
+            Observability, incident automation, rollout safety, performance, and
+            end-to-end ownership of critical systems.
+          </p>
+        </div>
+
+        <SectionLabel>Selected impact</SectionLabel>
+        <ul className="mt-4 list-disc space-y-3 pl-5 leading-relaxed marker:text-[#C97B5A]">
           <li>
-            Currently building safety and reliability infrastructure for Google
-            Gemini — helping keep AI generation safe and fast for products
-            across Vertex AI, Google AI Studio, and consumer apps serving
-            billions of people, all within a strict &lt;50ms latency budget.
+            Build distributed infrastructure supporting Gemini and other
+            globally deployed Google products under strict latency,
+            availability, and correctness requirements.
           </li>
           <li>
-            Led a multi-quarter redesign of a large-scale distributed database
-            to make it resilient across regions, removing a whole class of
-            outages.
+            Led a multi-quarter redesign of a large-scale distributed datastore
+            and control plane, improving regional resilience and eliminating a
+            recurring class of outages.
           </li>
           <li>
-            Built emergency override systems that cut incident resolution time
-            from hours to minutes during high-stakes regulatory rollouts,
-            working across 18 different teams' systems.
+            Designed incident-control mechanisms adopted across 18 teams,
+            reducing mitigation time during critical production events from
+            hours to minutes.
           </li>
           <li>
-            Built monitoring that catches silent failures other systems miss —
-            raised detection of hidden data-quality issues from almost nothing
-            to over 95%.
+            Built automated validation and monitoring that increased detection
+            of silent data-quality failures to more than 95%.
           </li>
           <li>
-            Earlier in my career, worked on Amazon's product detail pages —
-            one of the highest-traffic pages on the internet — improving load
-            speed for millions of daily visitors.
+            Improved performance and reliability for Amazon's Product Detail
+            Page, a globally distributed customer surface handling significant
+            traffic during events such as Prime Day and Cyber Monday.
           </li>
         </ul>
 
-        <SectionLabel>Skills</SectionLabel>
-        <dl className="mt-4 space-y-3 leading-relaxed text-sm">
+        <SectionLabel>Technical expertise</SectionLabel>
+        <dl className="mt-4 space-y-3 text-sm leading-relaxed">
           <SkillRow
             label="Languages"
-            items="Python · Go · Java · TypeScript · C++ · SQL"
+            items="Python · Go · Java · TypeScript · SQL"
           />
           <SkillRow
-            label="Data structures & algorithms"
-            items="Trees · Graphs · Hash maps · Heaps · Tries · LRU caches · Dynamic programming · Concurrency primitives"
+            label="Distributed systems"
+            items="Multi-region architecture · Control planes · Distributed data systems · Event-driven systems · Low-latency services"
           />
           <SkillRow
-            label="Systems & infrastructure"
-            items="Distributed systems · Multi-region failover · Kubernetes · gRPC · Event-driven architecture · Low-latency serving · Capacity planning"
+            label="Production engineering"
+            items="Observability · SLOs · Incident response · Safe rollouts · Failure detection · Performance analysis"
           />
           <SkillRow
-            label="Cloud & data"
-            items="GCP · AWS · Spanner / BigQuery · Kafka · Terraform · CI/CD"
+            label="Cloud and data"
+            items="Google Cloud · AWS · Spanner · BigQuery · Serverless systems · CI/CD"
           />
           <SkillRow
-            label="AI safety & evaluation"
-            items="LLM safety infrastructure · Policy & guardrail systems · Red-teaming · Adversarial testing · Evaluation harnesses & benchmarking · Content moderation pipelines · Responsible AI tooling"
-          />
-          <SkillRow
-            label="AI infrastructure & inference"
-            items="LLM serving at scale · Inference optimization (batching, KV cache, quantization) · GPU/TPU accelerator scheduling · RAG · Vector databases · MLOps · Model rollout & canarying"
-          />
-          <SkillRow
-            label="Reliability"
-            items="SRE practices · SLOs & error budgets · Observability & tracing · Incident response & postmortems · Chaos & load testing · Performance tuning · Large-scale system design"
+            label="Technical leadership"
+            items="System design · Multi-quarter execution · Cross-team adoption · Production ownership · Technical stakeholder alignment"
           />
         </dl>
 
@@ -141,21 +179,21 @@ export default function App() {
         <ul className="mt-4 space-y-6">
           <ExperienceItem
             company="Google"
-            title="Software Engineer, Systems & AI Infrastructure"
+            title="Site Reliability Engineer"
             dates="Oct 2022 – Present"
-            description="Distributed systems and AI safety infrastructure for products serving billions of users."
+            description="Building and operating distributed control-plane, data, and reliability infrastructure supporting Gemini and other globally deployed products."
           />
           <ExperienceItem
             company="Amazon"
             title="Software Development Engineer"
             dates="Jun 2021 – Sep 2022"
-            description="Performance and reliability work on Amazon's core product pages."
+            description="Performance, reliability, and production engineering for Amazon's Product Detail Page and its shared platform infrastructure."
           />
           <ExperienceItem
             company="ConovaAI"
             title="Cloud Developer"
             dates="May 2020 – May 2021"
-            description="Serverless data pipelines and ETL infrastructure."
+            description="Built serverless applications, event-driven data pipelines, ETL systems, and cloud-based product infrastructure."
           />
         </ul>
         <div className="mt-6">
@@ -170,40 +208,21 @@ export default function App() {
 
         <SectionLabel>Outside of work</SectionLabel>
         <p className="mt-4 leading-relaxed">
-          Outside of work I play tennis (still working on my forehand), beach
-          volleyball, ski in the winter, and surf when I can get to the coast.
-          I try to make it to a few live music festivals a year, and I'm
-          generally curious about how people think and communicate — which
-          sneaks into how I approach engineering teams too.
+          Outside of work, I play tennis and beach volleyball, ski in the
+          winter, and surf when I can get to the coast. I'm also interested in
+          how people think, communicate, and make decisions—something that
+          influences how I approach technical collaboration.
         </p>
 
         <SectionLabel>Get in touch</SectionLabel>
         <p className="mt-4 leading-relaxed">
-          I'm always happy to talk about infrastructure, AI safety, or
-          engineering careers. If you're building something interesting,
-          hiring, or just want to say hi, reach out.
+          I'm interested in distributed systems, AI infrastructure, research
+          infrastructure, data platforms, observability, and technically
+          demanding products operating at global scale.
         </p>
-        <nav aria-label="Get in touch links" className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-          {[
-            { label: "Email", href: "mailto:viivienn@gmail.com" },
-            { label: "LinkedIn", href: "https://linkedin.com/" },
-            { label: "GitHub", href: "https://github.com/viivienn" },
-            { label: "Résumé (PDF)", href: "vivienne-chow-resume.pdf", download: true },
-          ].map((l, i) => (
-            <span key={l.label} className="flex items-center gap-4">
-              {i > 0 && <span aria-hidden="true" className="text-[#C7C7C4]">·</span>}
-              <a
-                href={l.href}
-                {...("download" in l && (l as { download?: boolean }).download ? { download: "" } : {})}
-                className="rounded-sm underline underline-offset-4 decoration-[#1C1C1C]/20 hover:decoration-[#C97B5A] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C97B5A]"
-              >
-                {l.label}
-              </a>
-            </span>
-          ))}
-        </nav>
+        <ContactLinks ariaLabel="Get in touch links" />
 
-        <footer className="mt-20 pt-8 border-t border-[#EAE7E1] text-sm text-[#6B6B6B]">
+        <footer className="mt-20 border-t border-[#EAE7E1] pt-8 text-sm text-[#6B6B6B]">
           Built by Vivienne Chow.
         </footer>
       </div>
@@ -237,9 +256,9 @@ function ExperienceItem({
           <span className="font-medium">{company}</span>
           <span className="text-[#6B6B6B]"> — {title}</span>
         </div>
-        <div className="text-sm text-[#6B6B6B] shrink-0">{dates}</div>
+        <div className="shrink-0 text-sm text-[#6B6B6B]">{dates}</div>
       </div>
-      <p className="mt-1 text-sm text-[#6B6B6B] leading-relaxed">{description}</p>
+      <p className="mt-1 text-sm leading-relaxed text-[#6B6B6B]">{description}</p>
     </li>
   );
 }
