@@ -77,9 +77,9 @@ export default function App() {
           <img
             src={portrait}
             alt="Portrait of Vivienne Chow, software engineer at Google"
-            width={144}
-            height={144}
-            className="h-28 w-28 shrink-0 rounded-2xl object-cover sm:mt-1 sm:h-36 sm:w-36"
+            width={176}
+            height={176}
+            className="h-32 w-32 shrink-0 rounded-2xl object-cover sm:mt-1 sm:h-44 sm:w-44"
           />
         </header>
 
@@ -155,7 +155,7 @@ export default function App() {
         <dl className="mt-4 space-y-3 text-sm leading-relaxed">
           <SkillRow
             label="Languages"
-            items="Python · Go · Java · TypeScript · SQL"
+            items="Python · Go · C++ · Java · TypeScript · SQL"
           />
           <SkillRow
             label="Distributed systems"
